@@ -11,7 +11,7 @@ I started from the c++ tflite library inside Tensorflow and wanted an easy custo
 
 Therefore the basic extract of this idea can be found in the attached library. It consists of two parts:
 
-1.  Tensorflow Tflite library [/code/lib/tflite](./code/lib/tflite) - with modification to increase the possible model size
+1.  Tensorflow Tflite library [/code/lib/tfmicro](./code/lib/tfmicro) - with modification to increase the possible model size
 2. CTfLiteClass as the c++ wrapper handling tflite loading, input loading and readout. This can be found here: [/code/lib/jomjol_tfliteclass](./code/lib/jomjol_tfliteclass)
 
 The basic usage for a classification network is as easy as follows:
@@ -28,7 +28,7 @@ The basic usage for a classification network is as easy as follows:
 
 The surrounding code is implemented in the ESP32 Espressif SDK using the PlatformIO development environment.
 
-To run this you need a ESP32 with SD-card and PSRAM. The  additional PSRAM is needed to run the big models I use (even in tflite coding > 1MByte). I tested this code on a ESP32CAM (the same than in the main project. On the SD-card you need to copy the content of [/sd-card] (./sd-card) to the root directory.
+To run this you need a ESP32 with SD-card and PSRAM. The  additional PSRAM is needed to run the big models I use (even in tflite coding > 1MByte). I tested this code on a ESP32CAM (the same than in the main project. On the SD-card you need to copy the content of [/sd-card](./sd-card) to the root directory.
 
 
 
