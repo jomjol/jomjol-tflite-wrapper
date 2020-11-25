@@ -1,15 +1,20 @@
 #include <stdio.h>
+#include <string>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/event_groups.h"
 #include "esp_system.h"
+
+#include "driver/gpio.h"
+#include "sdkconfig.h"
+
 #include "esp_vfs_fat.h"
 #include "sdmmc_cmd.h"
-#include "driver/gpio.h"
-
-#include <string>
-#include <math.h>
+#include "driver/sdmmc_host.h"
+#include "driver/sdmmc_defs.h"
 
 #include "CTfLiteClass.h"
+
 
 static const char *TAGMAIN = "main";
 #define FLASH_GPIO GPIO_NUM_4
@@ -18,17 +23,18 @@ void Init_SDCard_GPIO()
 {
     ESP_LOGI(TAGMAIN, "Initializing SD card");
     sdmmc_host_t host = SDMMC_HOST_DEFAULT();
-    host.flags = SDMMC_HOST_FLAG_1BIT;
+    host.flags = SDMMC_HOST_FLAG_1BIT;    
     sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
     esp_vfs_fat_sdmmc_mount_config_t mount_config = { };
     mount_config.format_if_mount_failed = false;
     mount_config.max_files = 5;
 
     sdmmc_card_t* card;
-    esp_err_t ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &card);
+    esp_err_t ret;
+    ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &card);
     if (ret != ESP_OK) {
         if (ret == ESP_FAIL) {
-            ESP_LOGE(TAGMAIN, "Failed to mount filesystem.");
+            ESP_LOGE(TAGMAIN, "Failed to mount filesystem. If you want the card to be formatted, set format_if_mount_failed = true.");
         } else {
             ESP_LOGE(TAGMAIN, "Failed to initialize the card (%d). Make sure SD card lines have pull-up resistors in place.", ret);
         }
@@ -40,6 +46,7 @@ void Init_SDCard_GPIO()
     gpio_pad_select_gpio(FLASH_GPIO);
     gpio_set_direction(FLASH_GPIO, GPIO_MODE_OUTPUT);  
     gpio_set_level(FLASH_GPIO, 0);   
+
 }
 
 
@@ -160,7 +167,7 @@ void doTask(void *pvParameter)
         };
     }
 
-extern "C" void app_main()
+extern "C" void app_main(void)
 {
     esp_log_level_set("*", ESP_LOG_ERROR);
     Init_SDCard_GPIO();

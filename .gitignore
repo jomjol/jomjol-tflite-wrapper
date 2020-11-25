@@ -2,7 +2,7 @@
 .pio/
 .vscode/
 .code-workspace
-
+build/
 
 CMakeLists.txt.user
 CMakeCache.txt
