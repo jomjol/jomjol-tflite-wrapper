@@ -11,8 +11,9 @@ I started from the c++ tflite library inside Tensorflow and wanted an easy custo
 
 Therefore the basic extract of this idea can be found in the attached library. It consists of two parts:
 
-1.  Tensorflow Tflite library [/code/lib/tfmicro](./code/lib/tfmicro) - with modification to increase the possible model size
-2. CTfLiteClass as the c++ wrapper handling tflite loading, input loading and readout. This can be found here: [/code/lib/jomjol_tfliteclass](./code/lib/jomjol_tfliteclass)
+1.  Tensorflow Tflite library [/code/components/tfmicro](./code/componets/tfmicro) - with modification to increase the possible model size
+2. CTfLiteClass as the c++ wrapper handling tflite loading, input loading and readout. This can be found here: [/code/componets/jomjol_tfliteclass](./code/componets/jomjol_tfliteclass)
+3. In the sourrounding there are some helper libraries needed (see other components)
 
 The basic usage for a classification network is as easy as follows:
 
