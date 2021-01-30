@@ -40,7 +40,7 @@ class CTfLiteClass
         tflite::MicroInterpreter* interpreter;
         TfLiteTensor* output = nullptr;     
 //        static tflite::ops::micro::AllOpsResolver *resolver; 
-        static tflite::AllOpsResolver resolver;
+        tflite::AllOpsResolver resolver;
 
         int kTensorArenaSize;
         uint8_t *tensor_arena;
