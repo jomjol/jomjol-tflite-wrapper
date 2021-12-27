@@ -180,7 +180,7 @@ unsigned char* CTfLiteClass::ReadFileToCharArray(std::string _fn)
 {
     long size;
     
-    size = this->GetFileSize(_fn);
+    size = GetFileSize(_fn);
 
     if (size == -1)
     {
@@ -189,10 +189,10 @@ unsigned char* CTfLiteClass::ReadFileToCharArray(std::string _fn)
     }
 
 
-    unsigned char *result = (unsigned char*) malloc(size);
+  unsigned char *result = (unsigned char*) malloc(size);
   
 	if(result != NULL) {
-//		printf("\nSpeicher ist reserviert\n");
+//		printf("\nSpeicher ist reserviert: %ld\n", size);
         FILE* f = fopen(_fn.c_str(), "rb");     // vorher  nur "r"
         fread(result, 1, size, f);
         fclose(f);        
@@ -212,12 +212,10 @@ void CTfLiteClass::LoadModel(std::string _fn){
     this->error_reporter = new tflite::MicroErrorReporter;
 #endif
 
-    unsigned char *rd;
-    rd = this->ReadFileToCharArray(_fn.c_str());
-//    printf("loadedfile: %d", (int) rd);
 
-    this->model = tflite::GetModel(rd);
-    free(rd);
+    modelload = ReadFileToCharArray(_fn.c_str());
+    model = tflite::GetModel(modelload);
+
     TFLITE_MINIMAL_CHECK(model != nullptr); 
 //    printf("tfile Loaded.\n");  
 
@@ -240,6 +238,8 @@ CTfLiteClass::~CTfLiteClass()
   delete this->tensor_arena;
   delete this->interpreter;
   delete this->error_reporter;
+  if (modelload)
+    free(modelload);
 }        
 
 

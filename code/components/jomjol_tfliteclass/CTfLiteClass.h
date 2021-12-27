@@ -9,7 +9,7 @@
 #include "tensorflow/lite/micro/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/schema/schema_generated.h"
-#include "tensorflow/lite/version.h"
+//#include "tensorflow/lite/version.h"
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 #include "esp_err.h"
 #include "esp_log.h"
@@ -41,6 +41,8 @@ class CTfLiteClass
         TfLiteTensor* output = nullptr;     
 //        static tflite::ops::micro::AllOpsResolver *resolver; 
         static tflite::AllOpsResolver resolver;
+
+        unsigned char *modelload = NULL;
 
         int kTensorArenaSize;
         uint8_t *tensor_arena;
