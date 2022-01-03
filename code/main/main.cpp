@@ -173,6 +173,7 @@ void doTask(void *pvParameter)
 extern "C" void app_main(void)
 {
     esp_log_level_set("*", ESP_LOG_ERROR);
+    printf("Es geht los!\n");
     Init_SDCard_GPIO();
 
     xTaskCreate(&doTask, "doTask", configMINIMAL_STACK_SIZE * 64, NULL, 5, NULL);
